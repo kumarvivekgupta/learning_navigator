@@ -18,22 +18,21 @@ public class SubjectService {
     @Autowired
     private SubjectRepository subjectRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Transactional
-    public Subject saveSubject(Subject subject) {
-
-                User user = userRepository.findById(subject.getUser().getId()).orElseThrow(() -> new UserNotFoundException("User not found"));
-
-                subject.setUser(user);
-
-
+      public Subject addSubject(Subject subject) {
         return subjectRepository.save(subject);
     }
 
+    
+
+   
+
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
+    }
+
+    public void deleteSubject(Long subjectId) {
+        subjectRepository.deleteById(subjectId);
     }
 
     // Add more methods as needed

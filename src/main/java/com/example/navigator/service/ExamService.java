@@ -19,52 +19,34 @@ import com.example.navigator.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 
 @Service
 public class ExamService {
-
     @Autowired
     private ExamRepository examRepository;
 
-    @Autowired
-    private SubjectRepository subjectRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    
     @Transactional
-    public Exam registerExam(Long userId, Long subjectId, Exam exam) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-        Subject subject = subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException("Subject not found"));
-
-        // Check if the user is enrolled in the subject
-        if (!subject.getUser().getId().equals(user.getId())) {
-            throw new UserNotEnrolledInSubjectException("User not enrolled in subject");
-        }
-
-        // Assign the user and subject to the exam
-        exam.setUser(user);
-        exam.setSubject(subject);
-
+    public Exam addExam(Exam exam) {
         return examRepository.save(exam);
+    }
+
+   
+
+    public Exam getExam(Long examId) {
+        return examRepository.findById(examId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid exam ID"));
     }
 
     public List<Exam> getAllExams() {
         return examRepository.findAll();
     }
 
-    public Exam registerUser(Long examId, User user){
-
-                User registerUser = userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundException("User not found"));
-
-                Exam getExam= examRepository.findById(examId).orElseThrow(() -> new ExamNotFoundException("Exam not found"));
-                
-                getExam.setUser(registerUser);
-                examRepository.save(getExam);
-
-            return getExam;
-
+    public void deleteExam(Long examId) {
+        examRepository.deleteById(examId);
     }
 
-    
+   
 }
+

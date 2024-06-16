@@ -19,9 +19,19 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+   @ManyToMany
+    @JoinTable(
+        name = "student_subjects",
+        joinColumns = @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
     private List<Subject> subjects;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+        name = "student_exams",
+        joinColumns = @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "exam_id")
+    )
     private List<Exam> exams;
 }

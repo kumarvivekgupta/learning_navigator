@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name = "subjects")
@@ -18,8 +19,10 @@ public class Subject {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @ManyToMany(mappedBy = "subjects")
+    private List<User> students;
+
+    @OneToMany(mappedBy = "subject")
+    private List<Exam> exams;
 }
 
