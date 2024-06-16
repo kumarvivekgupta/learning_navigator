@@ -41,9 +41,4 @@ public class ExamController {
     public void deleteExam(@PathVariable Long examId) {
         examService.deleteExam(examId);
     }
-
-    // @PostMapping("/{studentId}/register/{examId}")
-    // public Exam registerExam(@PathVariable Long studentId, @PathVariable Long examId) {
-    //     return examService.registerExam(studentId, examId);
-    // }
 }
